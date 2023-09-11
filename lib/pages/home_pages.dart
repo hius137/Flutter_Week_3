@@ -18,8 +18,7 @@ class _HomePageState extends State<HomePage> {
     controller.jumpToPage(index);
     setState(() {
       _currentIndex = index;
-    });
-
+    });}
 
   @override
   Widget build(BuildContext context) {
