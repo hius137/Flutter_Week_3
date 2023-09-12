@@ -33,7 +33,9 @@ class _ClockPageState extends State<ClockPage>
       var utc_offset = jsonResponse["utc_offset"];
       var timezone = jsonResponse["timezone"];
       int viTriDauGach = timezone.toString().indexOf("/");
-      String timezonename = viTriDauGach != -1 ? timezone.toString().substring(viTriDauGach + 1).replaceAll('_', " ") : "";
+      String timezonename = viTriDauGach != -1
+          ? timezone.toString().substring(viTriDauGach + 1).replaceAll('_', " ")
+          : "";
 
       DateTime time = DateTime.parse(dateAndTime);
       time = time.add(Duration(hours: int.parse(uc_offset)));
@@ -57,43 +59,43 @@ class _ClockPageState extends State<ClockPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Container(
-              margin: EdgeInsets.only(top: 100),
-              child: Center(
-                child: Column(
-                  children: [
-                     Text(
-                       nameCity,
-                      style: GoogleFonts.jura(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'GMT:$gmt',
-                      style: GoogleFonts.jura(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    Text(
-                      timeCity,
-                      style: GoogleFonts.jura(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      dayCity,
-                      style: GoogleFonts.jura(
-                        fontSize:20,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
+      margin: EdgeInsets.only(top: 100),
+      child: Center(
+        child: Column(
+          children: [
+            Text(
+              nameCity,
+              style: GoogleFonts.jura(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
               ),
-        );
+            ),
+            Text(
+              'GMT:$gmt',
+              style: GoogleFonts.jura(
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            Text(
+              timeCity,
+              style: GoogleFonts.jura(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: 10),
+            Text(
+              dayCity,
+              style: GoogleFonts.jura(
+                fontSize: 20,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
