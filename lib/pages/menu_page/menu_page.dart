@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:project_2/model/time_model.dart';
 import 'dart:convert' as convert;
 
+
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
 
@@ -14,6 +15,7 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+
   @override
   Widget build(BuildContext context) {
     return CustomListView();
@@ -30,20 +32,25 @@ class CustomListView extends StatefulWidget {
 class _CustomListViewState extends State<CustomListView> {
   List<TimeModel> listCityTime = [];
 
-  void printCurrentTimeEverySecond() {
-    getTime('Asia/Ho_Chi_Minh');
-    getTime('America/New_York');
-    getTime('Asia/Hong_Kong');
-    getTime('Europe/London');
-    getTime('Europe/Berlin');
-    getTime('Asia/Tokyo');
-    getTime('Europe/Moscow');
-  }
+  Timer? currentSTime;
+
+  int secondCity = 0;
+  int minuteCity = 0;
+  int hourCity = 0;
 
   @override
   void initState() {
     super.initState();
-    printCurrentTimeEverySecond();
+    printCurrentTime();
+  }
+  void printCurrentTime() {
+    getTime('Asia/Ho_Chi_Minh');
+    // getTime('America/New_York');
+    // getTime('Asia/Hong_Kong');
+    // getTime('Europe/London');
+    // getTime('Europe/Berlin');
+    // getTime('Asia/Tokyo');
+    // getTime('Europe/Moscow');
   }
 
   Future<void> getTime(String uri) async {
@@ -55,18 +62,40 @@ class _CustomListViewState extends State<CustomListView> {
     var uc_offset = jsonResponse['utc_offset'].toString().substring(1, 3);
     var timezone = jsonResponse["timezone"];
     var utc_offset = jsonResponse["utc_offset"];
-    int viTriDauGach = timezone.toString().indexOf("/");
-    String timezonename = viTriDauGach != -1
-        ? timezone.toString().substring(viTriDauGach + 1).replaceAll('_', " ")
+    int slash = timezone.toString().indexOf("/");
+    String timezonename = slash != -1
+        ? timezone.toString().substring(slash + 1).replaceAll('_', " ")
         : "";
-
     DateTime time = DateTime.parse(dateAndTime);
     time = time.add(Duration(hours: int.parse(uc_offset)));
 
-    String timeCity = DateFormat.Hms().format(time);
+    setState(() {
+      secondCity = time.second;
+      minuteCity = time.minute;
+      hourCity = time.hour;
+    });
+    currentSTime = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+        setState(() {
+          secondCity = secondCity + 1;
+          if(secondCity == 60){
+            secondCity = 0;
+            minuteCity = minuteCity + 1;
+            if(minuteCity == 60){
+              minuteCity = 0;
+              hourCity = hourCity + 1;
+              if(hourCity == 24){
+                hourCity = 0;
+                secondCity + 1;
+              }
+            }
+          }
+        });
+    });
+    String timeCity = DateFormat.Hms().format(time); // 'hh//mm//ss'
     String dayCity = DateFormat('dd/MM/yyyy').format(time);
     String nameCity = timezonename;
     String gmtCity = utc_offset.toString();
+
     setState(() {
       listCityTime.add(TimeModel(
           clockTime: timeCity,
@@ -124,7 +153,8 @@ class _CustomListViewState extends State<CustomListView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          listCityTime[index].clockTime ?? "",
+                          // listCityTime[index].clockTime ?? "",
+                          '$hourCity:$minuteCity:$secondCity',
                           style: GoogleFonts.jura(
                             letterSpacing: 3,
                             fontSize: 25,

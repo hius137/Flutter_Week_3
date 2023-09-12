@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:project_2/pages/clock_page/clock_page.dart';
 import 'package:project_2/pages/menu_page/menu_page.dart';
 import 'package:project_2/pages/setting_page/setting_page.dart';

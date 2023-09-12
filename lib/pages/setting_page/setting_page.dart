@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_2/utils/app_theme.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
