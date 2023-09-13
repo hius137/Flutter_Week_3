@@ -1,6 +1,6 @@
 # project_2
 
-A new Flutter project.
+Week 3 Project
 
 ## Getting Started
 
