@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:project_2/model/time_model.dart';
 import 'dart:convert' as convert;
-import 'package:project_2/pages/menu_page/count_time.dart';
+import 'package:project_2/pages/menu_page/CountTime.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
