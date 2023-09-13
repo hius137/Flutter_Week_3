@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:project_2/model/time_model.dart';
 import 'dart:convert' as convert;
-
+import 'package:project_2/pages/menu_page/count_time.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -15,7 +15,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-
   @override
   Widget build(BuildContext context) {
     return CustomListView();
@@ -31,26 +30,20 @@ class CustomListView extends StatefulWidget {
 
 class _CustomListViewState extends State<CustomListView> {
   List<TimeModel> listCityTime = [];
-
-  Timer? currentSTime;
-
-  int secondCity = 0;
-  int minuteCity = 0;
-  int hourCity = 0;
-
   @override
   void initState() {
     super.initState();
     printCurrentTime();
   }
+
   void printCurrentTime() {
     getTime('Asia/Ho_Chi_Minh');
-    // getTime('America/New_York');
-    // getTime('Asia/Hong_Kong');
-    // getTime('Europe/London');
-    // getTime('Europe/Berlin');
-    // getTime('Asia/Tokyo');
-    // getTime('Europe/Moscow');
+    getTime('America/New_York');
+    getTime('Asia/Hong_Kong');
+    getTime('Europe/London');
+    getTime('Europe/Berlin');
+    getTime('Asia/Tokyo');
+    getTime('Europe/Moscow');
   }
 
   Future<void> getTime(String uri) async {
@@ -69,28 +62,6 @@ class _CustomListViewState extends State<CustomListView> {
     DateTime time = DateTime.parse(dateAndTime);
     time = time.add(Duration(hours: int.parse(uc_offset)));
 
-    setState(() {
-      secondCity = time.second;
-      minuteCity = time.minute;
-      hourCity = time.hour;
-    });
-    currentSTime = Timer.periodic(Duration(seconds: 1), (Timer timer) {
-        setState(() {
-          secondCity = secondCity + 1;
-          if(secondCity == 60){
-            secondCity = 0;
-            minuteCity = minuteCity + 1;
-            if(minuteCity == 60){
-              minuteCity = 0;
-              hourCity = hourCity + 1;
-              if(hourCity == 24){
-                hourCity = 0;
-                secondCity + 1;
-              }
-            }
-          }
-        });
-    });
     String timeCity = DateFormat.Hms().format(time); // 'hh//mm//ss'
     String dayCity = DateFormat('dd/MM/yyyy').format(time);
     String nameCity = timezonename;
@@ -98,16 +69,19 @@ class _CustomListViewState extends State<CustomListView> {
 
     setState(() {
       listCityTime.add(TimeModel(
-          clockTime: timeCity,
-          dayTime: dayCity,
-          cityName: nameCity,
-          gmt: gmtCity));
+        clockTime: timeCity,
+        dayTime: dayCity,
+        cityName: nameCity,
+        gmt: gmtCity,
+        timeCity: time,
+      ));
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: ListView.builder(
           itemCount: listCityTime.length,
           physics: const AlwaysScrollableScrollPhysics(),
@@ -152,15 +126,7 @@ class _CustomListViewState extends State<CustomListView> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          // listCityTime[index].clockTime ?? "",
-                          '$hourCity:$minuteCity:$secondCity',
-                          style: GoogleFonts.jura(
-                            letterSpacing: 3,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        CountTime(time: listCityTime[index].timeCity),
                         Text(
                           listCityTime[index].dayTime ?? "",
                           style: GoogleFonts.jura(

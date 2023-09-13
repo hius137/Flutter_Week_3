@@ -12,41 +12,14 @@ class ClockPage extends StatefulWidget {
   State<ClockPage> createState() => _ClockPageState();
 }
 
-class _ClockPageState extends State<ClockPage>
-    with AutomaticKeepAliveClientMixin {
-  String timeCity = "";
-  String dayCity = "";
-  String gmt = "";
-  String nameCity = "";
-
-  void printCurrentTimeEverySecond() {
-    Timer.periodic(Duration(seconds: 1), (Timer timer) async {
-      //http
-      var val =
-          Uri.parse("http://worldtimeapi.org/api/timezone/Asia/Ho_Chi_Minh");
-      var response = await get(val);
-      var jsonResponse =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-      var dateAndTime = jsonResponse["datetime"];
-      var uc_offset = jsonResponse['utc_offset'].toString().substring(1, 3);
-      var utc_offset = jsonResponse["utc_offset"];
-      var timezone = jsonResponse["timezone"];
-      int viTriDauGach = timezone.toString().indexOf("/");
-      String timezonename = viTriDauGach != -1
-          ? timezone.toString().substring(viTriDauGach + 1).replaceAll('_', " ")
-          : "";
-
-      DateTime time = DateTime.parse(dateAndTime);
-      time = time.add(Duration(hours: int.parse(uc_offset)));
-
-      setState(() {
-        timeCity = DateFormat.Hms().format(time);
-        dayCity = DateFormat('dd/MM/yyyy').format(time);
-        gmt = utc_offset.toString();
-        nameCity = timezonename;
-      });
-    });
-  }
+class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixin {
+  String dayCity = '';
+  String gmt = '';
+  String nameCity = '';
+  Timer? currentSTime;
+  int secondCity = 0;
+  int minuteCity = 0;
+  int hourCity = 0;
 
   @override
   void initState() {
@@ -54,9 +27,51 @@ class _ClockPageState extends State<ClockPage>
     printCurrentTimeEverySecond();
   }
 
+  Future<void> printCurrentTimeEverySecond() async {
+    //http
+    var val =
+        Uri.parse("http://worldtimeapi.org/api/timezone/Asia/Ho_Chi_Minh");
+    var response = await get(val);
+    var jsonResponse =
+        convert.jsonDecode(response.body) as Map<String, dynamic>;
+    var dateAndTime = await jsonResponse["datetime"];
+    var uc_offset = await jsonResponse['utc_offset'].toString().substring(1, 3);
+    var utc_offset = jsonResponse["utc_offset"];
+    var timezone = jsonResponse["timezone"];
+    int viTriDauGach = timezone.toString().indexOf("/");
+    String timezonename = viTriDauGach != -1
+        ? timezone.toString().substring(viTriDauGach + 1).replaceAll('_', " ")
+        : "";
+    DateTime time = DateTime.parse(dateAndTime);
+    time = time.add(Duration(hours: int.parse(uc_offset)));
+
+    secondCity = time.second;
+    minuteCity = time.minute;
+    hourCity = time.hour;
+    currentSTime = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        secondCity = secondCity + 1;
+        if (secondCity == 60) {
+          secondCity = 0;
+          minuteCity = minuteCity + 1;
+          if (minuteCity == 60) {
+            minuteCity = 0;
+            hourCity = hourCity + 1;
+            if (hourCity == 24) {
+              hourCity = 0;
+              secondCity + 1;
+            }
+          }
+        }
+      });
+    });
+    dayCity = DateFormat('dd/MM/yyyy').format(time);
+    gmt = utc_offset.toString();
+    nameCity = timezonename;
+  }
+
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Container(
       margin: EdgeInsets.only(top: 100),
       child: Center(
@@ -77,7 +92,7 @@ class _ClockPageState extends State<ClockPage>
               ),
             ),
             Text(
-              timeCity,
+              '$hourCity:$minuteCity:$secondCity',
               style: GoogleFonts.jura(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,

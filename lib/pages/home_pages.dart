@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_2/pages/clock_page/clock_page.dart';
 import 'package:project_2/pages/menu_page/menu_page.dart';
@@ -5,7 +7,9 @@ import 'package:project_2/pages/setting_page/setting_page.dart';
 import 'package:project_2/utils/app_image.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final File? urlImage;
+
+  const HomePage({super.key, this.urlImage});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -25,13 +29,27 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: controller,
-        children: const [
-          ClockPage(),
-          MenuPage(),
-          SettingPage(),
-        ],
+      body: InteractiveViewer(
+        maxScale: 5.0, // Giới hạn độ phóng to tối đa
+        minScale: 0.5,// Giới hạn độ thu nhỏ tối thiểu
+        child: Container(
+          decoration: widget.urlImage != null
+              ? BoxDecoration(
+                  image: DecorationImage(
+                    image: _buildBackgroundImage(),
+
+                  ),
+                )
+              : const BoxDecoration(),
+          child: PageView(
+            controller: controller,
+            children: const [
+              ClockPage(),
+              MenuPage(),
+              SettingPage(),
+            ],
+          ),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -65,5 +83,12 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  ImageProvider<Object> _buildBackgroundImage() {
+    if (kIsWeb) {
+      return NetworkImage(widget.urlImage!.path);
+    }
+    return FileImage(widget.urlImage!);
   }
 }
