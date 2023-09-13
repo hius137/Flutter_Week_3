@@ -35,15 +35,15 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
     var dateAndTime = await jsonResponse["datetime"];
-    var uc_offset = await jsonResponse['utc_offset'].toString().substring(1, 3);
-    var utc_offset = jsonResponse["utc_offset"];
+    var ucOffset = await jsonResponse['utc_offset'].toString().substring(1, 3);
+    var utcOffset = jsonResponse["utc_offset"];
     var timezone = jsonResponse["timezone"];
     int viTriDauGach = timezone.toString().indexOf("/");
     String timezonename = viTriDauGach != -1
         ? timezone.toString().substring(viTriDauGach + 1).replaceAll('_', " ")
         : "";
     DateTime time = DateTime.parse(dateAndTime);
-    time = time.add(Duration(hours: int.parse(uc_offset)));
+    time = time.add(Duration(hours: int.parse(ucOffset)));
 
     secondCity = time.second;
     minuteCity = time.minute;
@@ -66,7 +66,7 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
       });
     });
     dayCity = DateFormat('dd/MM/yyyy').format(time);
-    gmt = utc_offset.toString();
+    gmt = utcOffset.toString();
     nameCity = timezonename;
   }
 
@@ -84,6 +84,7 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 10),
             Text(
               'GMT:$gmt',
               style: GoogleFonts.jura(
@@ -92,13 +93,12 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
               ),
             ),
             Text(
-              '$hourCity:$minuteCity:$secondCity',
+              '$hourCity:$minuteCity:${secondCity <= 9 ? '0$secondCity' : secondCity}',
               style: GoogleFonts.jura(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(width: 10),
             Text(
               dayCity,
               style: GoogleFonts.jura(

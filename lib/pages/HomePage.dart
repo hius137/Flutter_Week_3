@@ -29,26 +29,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: InteractiveViewer(
-        maxScale: 5.0, // Giới hạn độ phóng to tối đa
-        minScale: 0.5,// Giới hạn độ thu nhỏ tối thiểu
-        child: Container(
-          decoration: widget.urlImage != null
-              ? BoxDecoration(
-                  image: DecorationImage(
-                    image: _buildBackgroundImage(),
-                    fit: BoxFit.fill,
-                  ),
-                )
-              : const BoxDecoration(),
-          child: PageView(
-            controller: controller,
-            children: const [
-              ClockPage(),
-              MenuPage(),
-              SettingPage(),
-            ],
-          ),
+      body: Container(
+        decoration: widget.urlImage != null
+            ? BoxDecoration(
+                image: DecorationImage(
+                  image: _buildBackgroundImage(),
+                  fit: BoxFit.fill,
+                ),
+              )
+            : const BoxDecoration(),
+        child: PageView(
+          controller: controller,
+          onPageChanged: (index) {
+            _currentIndex = index;
+          },
+          children: const [
+            ClockPage(),
+            MenuPage(),
+            SettingPage(),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
