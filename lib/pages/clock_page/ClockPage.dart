@@ -7,7 +7,6 @@ import 'dart:convert' as convert;
 
 class ClockPage extends StatefulWidget {
   const ClockPage({super.key});
-
   @override
   State<ClockPage> createState() => _ClockPageState();
 }
@@ -72,8 +71,9 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
-      margin: EdgeInsets.only(top: 100),
+      margin: const EdgeInsets.only(top: 100),
       child: Center(
         child: Column(
           children: [
@@ -84,7 +84,7 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'GMT:$gmt',
               style: GoogleFonts.jura(
@@ -113,6 +113,5 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

@@ -52,20 +52,20 @@ class _CustomListViewState extends State<CustomListView> {
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
     var dateAndTime = jsonResponse["datetime"];
-    var uc_offset = jsonResponse['utc_offset'].toString().substring(1, 3);
+    var ucOffset = jsonResponse['utc_offset'].toString().substring(1, 3);
     var timezone = jsonResponse["timezone"];
-    var utc_offset = jsonResponse["utc_offset"];
+    var utcOffset = jsonResponse["utc_offset"];
     int slash = timezone.toString().indexOf("/");
     String timezonename = slash != -1
         ? timezone.toString().substring(slash + 1).replaceAll('_', " ")
         : "";
     DateTime time = DateTime.parse(dateAndTime);
-    time = time.add(Duration(hours: int.parse(uc_offset)));
+    time = time.add(Duration(hours: int.parse(ucOffset)));
 
     String timeCity = DateFormat.Hms().format(time); // 'hh//mm//ss'
     String dayCity = DateFormat('dd/MM/yyyy').format(time);
     String nameCity = timezonename;
-    String gmtCity = utc_offset.toString();
+    String gmtCity = utcOffset.toString();
 
     setState(() {
       listCityTime.add(TimeModel(

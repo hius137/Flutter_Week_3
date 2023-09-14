@@ -34,7 +34,7 @@ class _CountTimeState extends State<CountTime> {
     minuteCity = widget.time.minute;
     hourCity = widget.time.hour;
 
-    currentSTime = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    currentSTime = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (context.mounted) {
         setState(() {
           secondCity = secondCity + 1;
