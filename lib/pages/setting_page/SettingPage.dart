@@ -24,16 +24,13 @@ class _SettingPageState extends State<SettingPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
+    return Center(
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
           ),
-          padding: EdgeInsets.only(top: 10, left: 30, right: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: EdgeInsets.only(top: 100, left: 30, right: 30),
+          child: Column(
             children: [
               Text(
                 'Change Background',
@@ -42,10 +39,10 @@ class _SettingPageState extends State<SettingPage> {
                   fontSize: 20,
                 ),
               ),
+              SizedBox(height: 10,),
               Container(
                 width: 200,
                 height: 60,
-                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.grey[700],
                   borderRadius: BorderRadius.circular(12),
@@ -70,7 +67,6 @@ class _SettingPageState extends State<SettingPage> {
             ],
           ),
         ),
-      ),
     );
   }
 }

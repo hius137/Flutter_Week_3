@@ -30,6 +30,7 @@ class CustomListView extends StatefulWidget {
 
 class _CustomListViewState extends State<CustomListView> {
   List<TimeModel> listCityTime = [];
+
   @override
   void initState() {
     super.initState();
@@ -80,69 +81,66 @@ class _CustomListViewState extends State<CustomListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: ListView.builder(
-          itemCount: listCityTime.length,
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return Container(
-              height: 80,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 0.01,
-                ),
+    return ListView.builder(
+        itemCount: listCityTime.length,
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Container(
+            height: 80,
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 0.01,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          listCityTime[index].cityName ?? "",
-                          style: GoogleFonts.jura(
-                            letterSpacing: 3,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        listCityTime[index].cityName ?? "",
+                        style: GoogleFonts.jura(
+                          letterSpacing: 3,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Text(
-                          'GMT: ${listCityTime[index].gmt}' ?? "",
-                          style: GoogleFonts.jura(
-                            fontSize: 18,
-                            letterSpacing: 1,
-                            color: Colors.grey[700],
-                            fontWeight: FontWeight.normal,
-                          ),
+                      ),
+                      Text(
+                        'GMT: ${listCityTime[index].gmt}' ?? "",
+                        style: GoogleFonts.jura(
+                          fontSize: 18,
+                          letterSpacing: 1,
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.normal,
                         ),
-                      ],
-                    ),
-                    SizedBox(width: 80),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CountTime(time: listCityTime[index].timeCity),
-                        Text(
-                          listCityTime[index].dayTime ?? "",
-                          style: GoogleFonts.jura(
-                            letterSpacing: 2,
-                            fontSize: 18,
-                            color: Colors.grey[500],
-                            fontWeight: FontWeight.normal,
-                          ),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CountTime(time: listCityTime[index].timeCity),
+                      Text(
+                        listCityTime[index].dayTime ?? "",
+                        style: GoogleFonts.jura(
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          color: Colors.grey[500],
+                          fontWeight: FontWeight.normal,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            );
-          }),
-    );
+            ),
+          );
+        });
   }
 }

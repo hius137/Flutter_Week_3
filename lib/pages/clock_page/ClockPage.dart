@@ -34,12 +34,12 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
     var dateAndTime = await jsonResponse["datetime"];
-    var ucOffset = await jsonResponse['utc_offset'].toString().substring(1, 3);
+    var ucOffset = jsonResponse['utc_offset'].toString().substring(1, 3);
     var utcOffset = jsonResponse["utc_offset"];
     var timezone = jsonResponse["timezone"];
-    int viTriDauGach = timezone.toString().indexOf("/");
-    String timezonename = viTriDauGach != -1
-        ? timezone.toString().substring(viTriDauGach + 1).replaceAll('_', " ")
+    int deleteindex = timezone.toString().indexOf("/");
+    String timezonename = deleteindex != -1
+        ? timezone.toString().substring(deleteindex + 1).replaceAll('_', " ")
         : "";
     DateTime time = DateTime.parse(dateAndTime);
     time = time.add(Duration(hours: int.parse(ucOffset)));
@@ -73,7 +73,7 @@ class _ClockPageState extends State<ClockPage> with AutomaticKeepAliveClientMixi
   Widget build(BuildContext context) {
     super.build(context);
     return Container(
-      margin: const EdgeInsets.only(top: 100),
+      margin: const EdgeInsets.only(top: 80),
       child: Center(
         child: Column(
           children: [
