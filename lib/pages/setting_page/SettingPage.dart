@@ -29,7 +29,7 @@ class _SettingPageState extends State<SettingPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
           ),
-          padding: EdgeInsets.only(top: 100, left: 30, right: 30),
+          padding: const EdgeInsets.only(top: 100, left: 30, right: 30),
           child: Column(
             children: [
               Text(
@@ -39,7 +39,7 @@ class _SettingPageState extends State<SettingPage> {
                   fontSize: 20,
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Container(
                 width: 200,
                 height: 60,

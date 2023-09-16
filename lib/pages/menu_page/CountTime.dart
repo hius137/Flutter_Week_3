@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CountTime extends StatefulWidget {
   final DateTime time;
-
   const CountTime({super.key, required this.time});
 
   @override
@@ -58,7 +57,7 @@ class _CountTimeState extends State<CountTime> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '$hourCity:$minuteCity:${secondCity <= 9 ? '0$secondCity' : secondCity}',
+      '$hourCity:${minuteCity <= 9 ? '0$minuteCity' : minuteCity}:${secondCity <= 9 ? '0$secondCity' : secondCity}',
       style: GoogleFonts.jura(
         letterSpacing: 3,
         fontSize: 25,

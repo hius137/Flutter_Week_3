@@ -17,7 +17,7 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
-    return CustomListView();
+    return const CustomListView();
   }
 }
 
@@ -114,13 +114,12 @@ class _CustomListViewState extends State<CustomListView> {
                         style: GoogleFonts.jura(
                           fontSize: 18,
                           letterSpacing: 1,
-                          color: Colors.grey[700],
                           fontWeight: FontWeight.normal,
                         ),
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +130,6 @@ class _CustomListViewState extends State<CustomListView> {
                         style: GoogleFonts.jura(
                           letterSpacing: 2,
                           fontSize: 18,
-                          color: Colors.grey[500],
                           fontWeight: FontWeight.normal,
                         ),
                       ),
