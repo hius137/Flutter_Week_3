@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-import 'package:project_2/model/TimeModel.dart';
+import 'package:project_2/model/time_mode.dart';
 import 'dart:convert' as convert;
-import 'package:project_2/pages/menu_page/CountTime.dart';
+import 'package:project_2/pages/menu_page/count_time.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:project_2/pages/HomePage.dart';
+import 'package:project_2/pages/home_page.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
